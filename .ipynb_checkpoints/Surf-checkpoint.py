@@ -61,7 +61,7 @@ def main():
     #Get three days from now
     end = arrow.now().shift(days=3)
     #get user authorization key from stromglass.io
-    authorization_key = input("Please enter authorization key from Stormglass: ")
+    authorization_key = input("Please enter API key from Stormglass: ")
     print("Please enter your surfspot by city and state")
     city = input("City: ")
     state = input("State: ")
@@ -75,7 +75,7 @@ def main():
         return 1
 
     if authorization_key == '':
-        print("No authorization key.")
+        print("No API key.")
         return 1
 
     #check quota of last run to not request again
