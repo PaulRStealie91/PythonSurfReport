@@ -1,0 +1,1 @@
+Three day surf forecast using Python. Get free API key from stormglass.io, type in full city name, full state name, Eastern or Pacific time, and receive multiple models forecast data. Cleaner data output still in progress.
