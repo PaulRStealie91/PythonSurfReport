@@ -263,6 +263,7 @@ def main():
 
     })
 
+    pd.set_option('display.max_rows', None,)
     pd.set_option('display.max_columns', None)
     pd.set_option('display.width', 1000)
 
@@ -281,7 +282,7 @@ def main():
         current_display_cols = base_columns + [col for col in model_specific_cols if col not in base_columns]
         df_model = df[current_display_cols].copy()
         if not df_model.empty:
-            df_model.head(1000)
+            print(df_model)
         else:
             print(f"No specific forecast data found for {model_id}.")
         print("-" * (40 + len(model_id)))
