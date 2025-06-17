@@ -196,7 +196,8 @@ def main():
         numerical_cols_to_round.remove('time')
     df[numerical_cols_to_round] = df[numerical_cols_to_round].round(2)
     #rename and order fields
-    df = df.rename(columns={
+    #df = df.rename(columns={
+    renameorder = { 
         # Common Column
         'time': 'Time',
 
@@ -261,14 +262,21 @@ def main():
         'currentDirection ecmwf': 'Current Dir ECMWF',
         'currentSpeed ecmwf': 'Current Spd (mph) ECMWF',
 
-    })
+    }
+
+    df = df.rename(columns=renameorder)
+
+    order = list(renameorder.values())
+
+    columnsorder = [col for col in order if col in df.columns]
+
+    df = df[columnsorder]
 
     pd.set_option('display.max_rows', None,)
     pd.set_option('display.max_columns', None)
     pd.set_option('display.width', 1000)
 
-    print(f"\n--- {city} Surf Forecast ---")
-    print("------------------------------------------")
+    print(f"\n--- {city} Surf Forecast Printed to CSV Files ---")
 
     all_renamed_columns = df.columns.tolist()
 
@@ -277,15 +285,16 @@ def main():
     base_columns = ['Time']
     
     for model_id in models_to_display:
-        print(f"\n--- Model: {model_id} ---")
         model_specific_cols = [col for col in all_renamed_columns if f" {model_id}" in col]
         current_display_cols = base_columns + [col for col in model_specific_cols if col not in base_columns]
         df_model = df[current_display_cols].copy()
         if not df_model.empty:
-            print(df_model)
+            filename = f'SurfReport_{model_id}.csv'
+            df_model.to_csv(filename, index=False)
+            #print(df_model)
         else:
             print(f"No specific forecast data found for {model_id}.")
-        print("-" * (40 + len(model_id)))
+        #print("-" * (40 + len(model_id)))
 
 if __name__ == "__main__":
     sys.exit(main())
